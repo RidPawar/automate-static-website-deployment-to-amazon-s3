@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Abzooba Contact Us</title>
+    <script>
+        // callAPI function that takes the base and exponent numbers as parameters
+        var callAPI = (fname, email, no, interests, comments) => {
+            // instantiate a headers object
+            var myHeaders = new Headers();
+            // add content type header to object
+            myHeaders.append("Content-Type", "application/json");
+            // using built in JSON utility package turn object to string and store in a variable
+            var raw = JSON.stringify({ "fname": fname, "email": email, "no": no, "interests": interests, "comments": comments });
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            // make API call with parameters and use promises to get response
+            fetch("https://7tceqhcvl5.execute-api.us-east-1.amazonaws.com/dev", requestOptions)
+                .then(response => response.text())
+                .then(result => alert(JSON.parse(result).body))
+                .catch(error => console.log('error', error));
+        }
+    </script>
+</head>
+
+<body style="background-color:rgb(224, 224, 209);">
+
+<!--     <div>
+        <img src="images\Abzooba-blk-1.png" alt="HTML5 Icon" style="width:350px;height:80px;">
+    </div>
+    <div>
+        <img src="images\p3.png" alt="HTML5 Icon" style="width:1340px;height:300px;">
+    </div>
+    <div>
+        <center><img src="images\p6.png" alt="HTML5 Icon" style="width:1340;height:700;"></img></center>
+    </div> -->
+    <div>
+        <center>
+            <h3>Get in touch</h3>
+            <form action="/action_page.php" style="background-color:white;border:rgb(224, 224, 209); border-width:5px; border-style:solid;">
+                <label for="name">Name:</label><br>
+                <input type="text" id="fname" name="fname"><br><br>
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email"><br><br>
+                <label for="no">Contact Number:</label><br>
+                <input type="text" id="no" name="no"><br><br>
+                <label for="interests">Interests :</label> <br>
+                <select id="interests" name="interests">
+                    <option value="none" selected disabled hidden >Select an Option</option>
+                    <option value="retail">Retail</option>
+                    <option value="health">Health care</option>
+                    <option value="bfsi">BFSI</option>
+                    <option value="others">others</option>
+                </select><br><br>
+                <label for="comments">Comments:</label><br>
+                <textarea id='comments' name="comments" rows="5" cols="30"></textarea><br><br>
+                <button type="button" style="background-color:orange;color:white;border:none;width:100px;height:40px;" onclick="callAPI(document.getElementById('fname').value,
+            document.getElementById('email').value,
+            document.getElementById('no').value,
+            document.getElementById('interests').value,
+            document.getElementById('comments').value)">Submit</button>
+            </form>
+        </center>
+    </div>
+</body>
+
+</html>
